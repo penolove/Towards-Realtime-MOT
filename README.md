@@ -48,5 +48,23 @@ We use 8x Nvidia Titan Xp to train the model, with a batch size of 32. You can a
 Adding custom datsets is quite simple, all you need to do is to organize your annotation files in the same format as in our training sets. Please refer to [DATASET_ZOO.md](https://github.com/Zhongdao/Towards-Realtime-MOT/blob/master/DATASET_ZOO.md) for the dataset format. 
 
 
+## docekr example
+```
+# [optional] built image by your own
+# cd docker;
+# docker built -t toward-realtime-mot .
+
+# pull image from docker-hub
+docker run -ti penolove/towards-realtime-mot /bin/bash
+
+# cp your video into container and download the weight from pretrained weight above
+# run demo inside container 
+python demo.py --input-video path/to/your/input/video --weights path/to/model/weights
+               --output-format video
+
+```
+
 ## Acknowledgement
 A large portion of code is borrowed from [ultralytics/yolov3](https://github.com/ultralytics/yolov3) and [longcw/MOTDT](https://github.com/longcw/MOTDT), many thanks to their wonderful work!
+
+

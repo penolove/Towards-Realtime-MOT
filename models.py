@@ -5,11 +5,17 @@ import torch.nn as nn
 
 from utils.parse_config import *
 from utils.utils import *
-from utils.syncbn import SyncBN
+
 import time
 import math
 
-batch_norm=SyncBN #nn.BatchNorm2d
+
+# add workaround
+try:
+    from utils.syncbn import SyncBN
+    batch_norm=SyncBN #nn.BatchNorm2d
+except:
+    batch_norm=nn.BatchNorm2d
 
 def create_modules(module_defs):
     """
