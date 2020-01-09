@@ -55,7 +55,7 @@ Adding custom datsets is quite simple, all you need to do is to organize your an
 # docker built -t toward-realtime-mot .
 
 # pull image from docker-hub
-docker run --gpus all -ti penolove/towards-realtime-mot /bin/bash
+docker run --rm --gpus all -v ./:/Towards-Realtime-MOT -ti penolove/towards-realtime-mot /bin/bash
 
 # cp your video into container and download the weight from pretrained weight above
 # run demo inside container 

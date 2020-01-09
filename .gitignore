@@ -110,3 +110,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+*.pt
+*.mp4
+.vscode/
