@@ -64,3 +64,16 @@ Adding custom datsets is quite simple, all you need to do is to organize your an
 
 ## Acknowledgement
 A large portion of code is borrowed from [ultralytics/yolov3](https://github.com/ultralytics/yolov3) and [longcw/MOTDT](https://github.com/longcw/MOTDT), many thanks to their wonderful work!
+
+
+## eyewitnessWrapper
+
+```bash
+docker build -t towards-realtime-mot docker/
+
+docker run --rm --gpus all -v $(pwd)/:/Towards-Realtime-MOT -ti towards-realtime-mot /bin/bash
+cd /Towards-Realtime-MOT;
+
+python naive_tracker.py --input-video path/to/your/input/video --weights path/to/model/weights \
+               --output-video path/to/your/output/video
+```

@@ -51,11 +51,12 @@ def eval_seq(opt, dataloader, data_type, result_filename, save_dir=None, show_im
         # run tracking
         timer.tic()
         blob = torch.from_numpy(img).cuda().unsqueeze(0)
-        online_targets = tracker.update(blob, img0)
+        online_targets = tracker.update(blob, img0.shape)
         online_tlwhs = []
         online_ids = []
         for t in online_targets:
             tlwh = t.tlwh
+            import ipdb; ipdb.set_trace()
             tid = t.track_id
             vertical = tlwh[2] / tlwh[3] > 1.6
             if tlwh[2] * tlwh[3] > opt.min_box_area and not vertical:
@@ -77,7 +78,7 @@ def eval_seq(opt, dataloader, data_type, result_filename, save_dir=None, show_im
     return frame_id, timer.average_time, timer.calls
 
 
-def main(opt, data_root='/data/MOT16/train', det_root=None, seqs=('MOT16-05',), exp_name='demo', 
+def main(opt, data_root='/data/MOT16/train', det_root=None, seqs=('MOT16-05',), exp_name='demo',
          save_images=False, save_videos=False, show_image=True):
     logger.setLevel(logging.INFO)
     result_root = os.path.join(data_root, '..', 'results', exp_name)
@@ -94,7 +95,7 @@ def main(opt, data_root='/data/MOT16/train', det_root=None, seqs=('MOT16-05',), 
         logger.info('start seq: {}'.format(seq))
         dataloader = datasets.LoadImages(osp.join(data_root, seq, 'img1'), opt.img_size)
         result_filename = os.path.join(result_root, '{}.txt'.format(seq))
-        meta_info = open(os.path.join(data_root, seq, 'seqinfo.ini')).read() 
+        meta_info = open(os.path.join(data_root, seq, 'seqinfo.ini')).read()
         frame_rate = int(meta_info[meta_info.find('frameRate')+10:meta_info.find('\nseqLength')])
         nf, ta, tc = eval_seq(opt, dataloader, data_type, result_filename,
                               save_dir=output_dir, show_image=show_image, frame_rate=frame_rate)
@@ -145,7 +146,7 @@ if __name__ == '__main__':
     parser.add_argument('--save-videos', action='store_true', help='save tracking results (video)')
     opt = parser.parse_args()
     print(opt, end='\n\n')
- 
+
     if not opt.test_mot16:
         #seqs_str = '''KITTI-13
         #              KITTI-17
@@ -179,6 +180,6 @@ if __name__ == '__main__':
          seqs=seqs,
          exp_name=opt.weights.split('/')[-2],
          show_image=False,
-         save_images=opt.save_images, 
+         save_images=opt.save_images,
          save_videos=opt.save_videos)
 
