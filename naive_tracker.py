@@ -94,7 +94,7 @@ class TowardRealtimeMOTracker(ObjectTracker):
                 x2, y2 = (x1 + w, y1 + h)
                 object_id = t.track_id
                 vertical = w / h > 1.6
-                if w * h > opt.min_box_area and not vertical:
+                if w * h > self.opt.min_box_area and not vertical:
                     tracked_objects[idx].append(
                         BoundedBoxObject(
                             x1, y1, x2, y2, int(object_id), float(t.score), ""
